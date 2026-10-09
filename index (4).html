@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hurricane Isaias Tracker</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0b1220;--card:#131c2e;--tx:#e8eef8;--mut:#93a3bd;--sea:#10304f;--land:#2a3447;--bd:#24324b;--red:#ff4d4d;--org:#ffa534;--pur:#c77dff;--yel:#ffe066;--cy:#4cc9f0}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef2f8;--card:#fff;--tx:#14203a;--mut:#5a6a86;--sea:#cfe3f5;--land:#dfe3ea;--bd:#d3dbe8}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#131c2e;--tx:#e8eef8;--mut:#93a3bd;--sea:#10304f;--land:#2a3447;--bd:#24324b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:14px}
+.alert{background:var(--red);color:#fff;border-radius:10px;padding:10px 14px;font-weight:600}
+h1{margin:14px 0 2px;font-size:24px}.sub{color:var(--mut);font-size:13px;margin-bottom:12px}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:860px){.grid{grid-template-columns:1.5fr 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.card h2{margin:0 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.s{background:var(--bg);border-radius:8px;padding:8px 10px}.s b{display:block;font-size:20px}.s span{font-size:12px;color:var(--mut)}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600;color:#111}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tg label{display:flex;gap:5px;align-items:center;background:var(--bg);border:1px solid var(--bd);border-radius:99px;padding:4px 10px;font-size:13px;cursor:pointer}
+svg{width:100%;height:auto;display:block;border-radius:8px;background:var(--sea)}
+.links{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.links a{display:block;text-align:center;padding:10px;border-radius:8px;background:var(--cy);color:#06223a;font-weight:600;text-decoration:none;font-size:14px}
+.links a.alt{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+ul{margin:0;padding-left:18px}li{margin:4px 0}.note{font-size:12px;color:var(--mut);margin-top:8px}
+.wrap{max-width:1400px}
+.layout{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:1100px){.layout{grid-template-columns:minmax(0,1fr) 340px}.side{position:sticky;top:8px;align-self:start;max-height:calc(100vh - 16px);overflow:auto}}
+.side{display:grid;gap:12px}.side .card{padding:10px}.side h2{margin-bottom:6px}
+.side img{width:100%;height:auto;border-radius:6px;background:#000;display:block}
+.side .cap{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin:4px 0 0}
+.side a{color:var(--cy)}.miss{font-size:12px;color:var(--mut);padding:10px;border:1px dashed var(--bd);border-radius:6px}
+.al{font-size:13px;margin:4px 0;padding:6px 8px;border-left:4px solid var(--org);background:var(--bg);border-radius:4px}
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mut)}
+.bar button{background:var(--cy);color:#06223a;border:0;border-radius:6px;padding:4px 10px;font-weight:600;cursor:pointer}
+.vid{position:relative;padding-top:56.25%;background:#000;border-radius:6px;overflow:hidden}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cam{padding:10px}.cam h2{margin-bottom:6px}.cam .cap{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mut);margin-top:4px}.cam a{color:var(--cy)}
+.rail{display:grid;gap:12px;align-content:start}
+.layout>.mainc{order:1}.layout>.side{order:2}.layout>.rail{order:3}
+@media(min-width:1100px) and (max-width:1499px){.layout>.rail{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1500px){.wrap{max-width:1760px}.layout{grid-template-columns:280px minmax(0,1fr) 340px}.layout>.rail{order:0;position:sticky;top:8px;align-self:start}}
+</style></head><body><div class="wrap">
+<div class="alert">⚠ Hurricane Warning in effect for the western Florida Panhandle. Landfall expected tonight. Follow Okaloosa County and NHC instructions; if you are in an evacuation zone, go now.</div>
+<h1>🌀 Hurricane Isaias Tracker</h1>
+<div class="sub">Updated through the NHC 1 PM CDT Fri Oct 9, 2026 position (120 mph, 959 mb at 11 AM) plus news reports. The side panel refreshes itself every 30 minutes.</div>
+
+<div class="layout"><aside class="rail"><div class="card cam"><h2>The Crab Trap, Okaloosa Island</h2><div class="vid"><iframe src="https://watch.hdrelay.io/player.html?cam=cam_five_star___crab_trap_okaloosa_isle_1782322808824&amp;profile=p_mqsj2j73dax1&amp;sig=a2f44366051f25e636d725e5&amp;exp=1784926129902" title="The Crab Trap, Okaloosa Island" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="cap"><span>Closest to Fort Walton Beach</span><a href="https://www.old98destin.com/crab-trap-okaloosa-island/" target="_blank" rel="noopener">Open cam</a></div></div><div class="card cam"><h2>Pompano Joe's, Miramar Beach</h2><div class="vid"><iframe src="https://watch.hdrelay.io/player.html?cam=cam_five_star___pompano_joe_s_1781797463071&amp;profile=p_mqjq0ruimd7h&amp;sig=a96bfd69d970f7cf12e9098e&amp;exp=1813868905173" title="Pompano Joe's, Miramar Beach" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="cap"><span>Overlooks the artificial reef</span><a href="https://www.old98destin.com/pompano-joes-miramar-beach/" target="_blank" rel="noopener">Open cam</a></div></div></aside><div class="mainc">
+<div class="card" style="margin-bottom:12px"><h2>📺 Live broadcast</h2>
+<div style="position:relative;padding-top:56.25%;background:#000;border-radius:8px"><iframe src="https://www.youtube.com/embed/S6a_dpXVulE" title="Live hurricane coverage" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:8px" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div class="links" style="margin-top:8px"><a href="https://www.youtube.com/watch?v=S6a_dpXVulE" target="_blank" rel="noopener">Watch live on YouTube</a></div>
+<div class="note">If the player shows an error, the video owner may have disabled embedding. Use the button to watch on YouTube.</div></div>
+<div class="grid">
+<div class="card"><h2>Gulf map (schematic)</h2>
+<div class="tg" id="tg"></div>
+<svg id="map" viewBox="0 0 720 450" role="img" aria-label="Schematic Gulf map with Isaias track"></svg>
+<div class="note">Past track and forecast points come from NHC advisory #12 (10 AM CDT): 29.7N 86.8W tonight, then inland near 32.1N 87.1W by Saturday morning. The line between points and the cone width are my approximation, not NHC graphics. The 11 AM update has the storm slightly east of the forecast track. Use the NHC cone below for the official graphic.</div></div>
+
+<div style="display:grid;gap:12px;align-content:start">
+<div class="card"><h2>Storm status</h2>
+<div class="stats">
+<div class="s"><b>Cat 3</b><span>Major hurricane</span></div>
+<div class="s"><b>~120 mph</b><span>Max winds (reported)</span></div>
+<div class="s"><b>NNE 16 mph</b><span>Motion</span></div>
+<div class="s"><b>~160 mi S</b><span>of Pensacola (1 PM CDT)</span></div></div>
+<p style="margin:10px 0 0">NHC now expects the center to come ashore <b>just east of Pensacola Beach this evening</b> at or near Category 3, per its latest update. Hurricane-force winds could reach about 100 miles inland.</p></div>
+
+<div class="card"><h2>📍 Fort Walton Beach, FL</h2>
+<div class="stats">
+<div class="s"><b>6–9 ft</b><span>Storm surge above ground (NHC, AL/FL line to Grayton Beach)</span></div>
+<div class="s"><b>90–110 mph</b><span>Sustained winds, gusts to 135 (WALA Fox10 forecast)</span></div>
+<div class="s"><b>4–8 in</b><span>Rain, isolated 15 in (NHC regional)</span></div>
+<div class="s"><b>Evacuate</b><span>Okaloosa Zones A &amp; B mandatory since Thu noon</span></div></div>
+<ul style="margin-top:10px">
+<li>Surge is the deadliest threat. Barrier island, Okaloosa Island, Santa Rosa Sound and bay-front areas flood first.</li>
+<li>Extended power outages likely. Tornadoes possible in outer bands.</li>
+<li>Zones A &amp; B cover Okaloosa Island and coastal parts of Fort Walton Beach, Destin, Mary Esther and Niceville.</li><li>County says bridges may close at sustained 40 mph. Shelters announced Thursday: Davidson Middle School (Crestview) and Raider Arena (Niceville).</li><li>Local forecasters reported an eastward shift, raising wind concern for Destin, Fort Walton Beach and Crestview.</li></ul>
+<div class="note">Exact local numbers shift each advisory. Verify with NWS Mobile/Pensacola.</div></div>
+</div></div>
+
+<div class="card" style="margin-top:12px"><h2>📺 Local live coverage</h2>
+<div class="links">
+<a href="https://www.fox10tv.com/" target="_blank" rel="noopener">FOX10 Mobile-Pensacola (Watch Live)</a>
+<a href="https://www.wjhg.com/" target="_blank" rel="noopener">WJHG Panama City</a>
+<a href="https://www.weartv.com/" target="_blank" rel="noopener">WEAR Pensacola</a>
+<a href="https://www.wkrg.com/" target="_blank" rel="noopener">WKRG Mobile</a>
+<a class="alt" href="https://www.foxweather.com/" target="_blank" rel="noopener">FOX Weather (national)</a></div>
+<div class="note">Station streams can't be embedded in this hosted page, so each opens in a new tab. Look for the Watch Live button on each site.</div></div>
+
+<div class="card" style="margin-top:12px"><h2>Live radar, spaghetti models &amp; official forecast</h2>
+<div class="links">
+<a href="https://www.nhc.noaa.gov/" target="_blank" rel="noopener">NHC cone &amp; forecast</a>
+<a href="https://radar.weather.gov/" target="_blank" rel="noopener">Live NWS radar</a>
+<a href="https://www.tropicaltidbits.com/storminfo/" target="_blank" rel="noopener">Spaghetti models</a>
+<a class="alt" href="https://www.spaghettimodels.com/" target="_blank" rel="noopener">Spaghetti Models (alt)</a>
+<a class="alt" href="https://www.windy.com/" target="_blank" rel="noopener">Windy radar &amp; wind</a>
+<a class="alt" href="https://www.weather.gov/mob/" target="_blank" rel="noopener">NWS Mobile/Pensacola</a></div>
+<div class="note">This hosted page cannot pull live feeds (radar tiles, NHC GIS, model tracks), so those layers open in a new tab from their official sources.</div></div>
+
+<div class="card" style="margin-top:12px"><h2>Model guidance &amp; track assessment</h2>
+<ul>
+<li><b>Consensus:</b> landfall window from Dauphin Island, AL to Destin, FL tonight. NHC's center line sits on the western Panhandle coast near the Santa Rosa/Okaloosa area.</li>
+<li><b>West side:</b> global models (Euro, GFS ensembles) have leaned west of NHC, toward Mobile Bay and Baldwin County.</li>
+<li><b>East side:</b> AI models (Google DeepMind) lean east, toward Destin/Fort Walton Beach, and tend to be faster and stronger. NHC leaned toward this side, and the storm was reported slightly east of the forecast track.</li>
+<li><b>Fort Walton Beach:</b> in the right-front (worst) quadrant under most scenarios. West outcomes put it about 50 miles east of center with surge and wind still severe. East outcomes put it near the core.</li>
+<li><b>Intensity:</b> regional models (HAFS, HWRF) and statistical guidance keep it near major-hurricane strength to landfall. Shear could weaken it, but a larger wind field makes impacts extend well east of center.</li>
+<li><b>Confidence:</b> track is fairly high within roughly 50 miles. The exact landfall point matters less than the surge and wind reaching the whole warned coast.</li></ul>
+<div class="note">The green dotted lines are illustrative west and east scenarios drawn from news and forecaster descriptions of model clustering. They are not plotted model output. For actual spaghetti plots use the model links below. NHC's official forecast outperforms most individual models.</div></div>
+
+<div class="card" style="margin-top:12px"><h2>Watches &amp; warnings (as reported)</h2>
+<ul>
+<li><span class="pill" style="background:var(--red)">Hurricane Warning</span> Ocean Springs, MS to Bay/Gulf County line, FL, including Mobile and Pensacola</li>
+<li><span class="pill" style="background:var(--pur)">Tropical Storm Warning</span> Jefferson/Plaquemines line, LA to west of Ocean Springs; east of Bay/Gulf line to Aucilla River</li>
+<li><span class="pill" style="background:var(--cy)">Storm Surge Warning</span> Mouth of the Mississippi to the Suwannee River</li></ul></div>
+</div>
+<aside class="side">
+<div class="card"><div class="bar"><span id="upd">Loading...</span><button onclick="refreshAll()">Refresh now</button></div></div>
+<div class="card cam"><h2>Surf Hut, Miramar Beach</h2><div class="vid"><iframe src="https://watch.hdrelay.io/player.html?cam=cam_five_star___surf_hut_miramar_beach_1782325497489&amp;profile=p_mqsjqsimg753&amp;sig=e0e04db23349bfe567697998&amp;exp=1784926211823" title="Surf Hut, Miramar Beach" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="cap"><span>Scenic Gulf Drive</span><a href="https://www.old98destin.com/surf-hut-miramar-beach/" target="_blank" rel="noopener">Open cam</a></div></div><div class="card"><h2>Live storm status (NHC)</h2><div id="live" class="miss">Loading...</div></div>
+<div class="card"><h2>Alerts: Fort Walton Beach (NWS)</h2><div id="alerts" class="miss">Loading...</div></div>
+<div class="card"><h2>Radar loop (Eglin KEVX)</h2><img id="radar" alt="Radar loop"><div class="cap"><span>Auto-refreshing</span><a href="https://radar.weather.gov/station/kevx/standard" target="_blank" rel="noopener">Full radar</a></div></div>
+<div id="nhc"></div>
+</aside></div>
+
+<script>
+const W=720,H=450,P=(lo,la)=>[((lo+98)*40).toFixed(1),((31.5-la)*60).toFixed(1)];
+const pts=a=>a.map(([lo,la])=>P(lo,la).join(',')).join(' ');
+const coast=[[-98,26],[-97.2,27.6],[-95,29],[-94,29.7],[-92,29.6],[-90.5,29.2],[-89.2,29.0],[-89.4,30.0],[-88.5,30.35],[-87.5,30.3],[-86.6,30.4],[-85.7,29.9],[-85.0,29.7],[-84.0,30.1],[-83.2,29.4],[-82.7,28.5],[-82.8,27.7],[-82.0,26.8],[-81.8,26.1],[-81.1,25.2],[-80.2,25.2],[-80,31.5],[-98,31.5]];
+const trackPast=[[-92.4,22.8],[-91.7,23.1],[-91.2,23.3],[-90.6,23.7],[-90.2,23.7],[-88.8,24.9],[-88.4,25.4],[-88.4,25.8],[-88.0,26.4],[-87.7,27.0],[-87.2,27.9]];
+const trackFcst=[[-87.2,27.9],[-86.8,29.7],[-86.9,30.4],[-87.03,31.5]];
+const mW=[[-87.2,27.9],[-87.6,29.2],[-87.8,30.35],[-88.0,31.5]],mE=[[-87.2,27.9],[-86.6,29.3],[-86.3,30.35],[-86.2,31.5]];
+const cone=[[-87.5,27.9],[-87.5,29.7],[-88.0,31.5],[-86.0,31.5],[-86.1,29.7],[-86.9,27.9]];
+const warnH=[[-88.8,30.4],[-87.5,30.3],[-86.6,30.4],[-85.4,29.9]];
+const warnT1=[[-89.6,29.9],[-88.8,30.4]],warnT2=[[-85.4,29.9],[-83.8,30.1]];
+const surge=[[-86.7,30.4],[-86.17,30.33]];
+const fp=(lo,la,t,dy)=>{const[x,y]=P(lo,la);return `<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="#ffe066" stroke-width="2"/><text x="${+x+9}" y="${+y+(dy||4)}" fill="#fff" font-size="11">${t}</text>`};
+const L={cone:['Forecast cone','#ffffff'],track:['Track','#ffe066'],warn:['Warnings','#ff4d4d'],surge:['Surge zone','#4cc9f0'],fwb:['Fort Walton Beach','#ffa534'],mod:['Model spread (illustrative)','#b8f2a8']};
+const g={};
+const m=document.getElementById('map');
+const line=(a,c,w,d)=>`<polyline points="${pts(a)}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${d?'stroke-dasharray="'+d+'"':''}/>`;
+const [cx,cy]=P(-87.2,27.9),[fx,fy]=P(-86.62,30.42);
+g.cone=`<polygon points="${pts(cone)}" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-opacity=".6" stroke-dasharray="4 3"/>`;
+g.track=line(trackPast,'#ffe066',3)+line(trackFcst,'#ffe066',3,'7 5')+`<circle cx="${cx}" cy="${cy}" r="9" fill="#ff4d4d" stroke="#fff" stroke-width="2"/><text x="${+cx+14}" y="${+cy+4}" fill="#fff" font-size="13" font-weight="700">Isaias (Cat 3)</text>`+fp(-86.8,29.7,'NHC 7PM CDT: 29.7N 86.8W, 115 mph')+fp(-86.9,30.4,'Landfall (est.)',26);
+g.warn=line(warnH,'#ff4d4d',7)+line(warnT1,'#c77dff',7)+line(warnT2,'#c77dff',7);
+g.surge=line(surge,'#4cc9f0',12);
+g.mod=line(mW,'#b8f2a8',2.5,'2 5')+line(mE,'#b8f2a8',2.5,'2 5')+`<text x="${P(-88.9,31.2)[0]}" y="${P(-88.9,31.2)[1]}" fill="#b8f2a8" font-size="10">West guidance</text><text x="${P(-86.1,31.2)[0]}" y="${P(-86.1,31.2)[1]}" fill="#b8f2a8" font-size="10">East guidance</text>`;
+g.fwb=`<circle cx="${fx}" cy="${fy}" r="6" fill="#ffa534" stroke="#fff" stroke-width="2"/><text x="${+fx-8}" y="${+fy-12}" fill="#fff" font-size="12" font-weight="700" text-anchor="end">Fort Walton Beach</text>`;
+const labels=[['Houston',-95.3,29.8],['New Orleans',-90.1,30],['Mobile',-88.0,30.7],['Pensacola',-87.2,30.5],['Tampa',-82.5,27.9]].map(([n,lo,la])=>{const[x,y]=P(lo,la);return `<text x="${x}" y="${y}" fill="#93a3bd" font-size="10" text-anchor="middle">${n}</text>`}).join('');
+const st={cone:1,track:1,warn:1,surge:1,fwb:1,mod:1};
+function draw(){m.innerHTML=`<polygon points="${pts(coast)}" fill="var(--land)" stroke="#6b7a96" stroke-width="1"/><text x="300" y="360" fill="#93a3bd" font-size="14" opacity=".6">GULF OF MEXICO</text>`+labels+['cone','warn','surge','mod','track','fwb'].filter(k=>st[k]).map(k=>g[k]).join('')}
+const tg=document.getElementById('tg');
+Object.keys(L).forEach(k=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" checked><span style="width:10px;height:10px;border-radius:50%;background:${L[k][1]}"></span>${L[k][0]}`;l.firstChild.onchange=e=>{st[k]=e.target.checked?1:0;draw()};tg.appendChild(l)});
+draw();
+
+const ID='AL092026',D='AT09',B='https://www.nhc.noaa.gov/storm_graphics/'+D+'/'+ID+'_';
+const GR=[['5-day cone','5day_cone_no_line_and_wind'],['Peak storm surge','peak_surge'],['Earliest TS-wind arrival','earliest_reasonable_toa_34'],['Most likely TS-wind arrival','most_likely_toa_34'],['Wind probabilities (34 kt)','wind_probs_34_cum_F120'],['Key messages','key_messages']];
+const $=id=>document.getElementById(id),mph=k=>Math.round(k*1.15078);
+function buildGraphics(){$('nhc').innerHTML=GR.map(([t,f],i)=>`<div class="card"><h2>${t}</h2><img id="g${i}" alt="${t}" data-f="${f}"><div class="miss" id="m${i}" style="display:none">Not published yet. <a href="https://www.nhc.noaa.gov/refresh/graphics_at4+shtml/" target="_blank" rel="noopener">See NHC graphics</a></div></div>`).join('');GR.forEach((g,i)=>{const im=$('g'+i);im.onerror=()=>{im.style.display='none';$('m'+i).style.display='block'};im.onload=()=>{im.style.display='block';$('m'+i).style.display='none'}})}
+function loadImgs(){const t=Date.now();GR.forEach((g,i)=>{const im=$('g'+i);im.src=B+g[1]+'.png?t='+t});$('radar').src='https://radar.weather.gov/ridge/standard/KEVX_loop.gif?t='+t}
+async function loadStatus(){const el=$('live');try{const r=await fetch('https://www.nhc.noaa.gov/CurrentStorms.json',{cache:'no-store'});const j=await r.json();const st=(j.activeStorms||[]).find(x=>(x.id||'').toLowerCase()===ID.toLowerCase());if(!st){el.className='miss';el.textContent='Isaias is not in the NHC active-storm feed right now.';return}
+el.className='';el.innerHTML=`<div class="stats"><div class="s"><b>${mph(+st.intensity)} mph</b><span>Max winds</span></div><div class="s"><b>${st.pressure} mb</b><span>Pressure</span></div><div class="s"><b>${st.latitudeNumeric}N ${Math.abs(st.longitudeNumeric)}W</b><span>Position</span></div><div class="s"><b>${st.movementDir||'?'}&deg; @ ${st.movementSpeed? mph(+st.movementSpeed):'?'} mph</b><span>Motion</span></div></div><div class="note">${st.classification} ${st.name}. NHC last update: ${new Date(st.lastUpdate).toLocaleString()}</div>`}catch(e){el.className='miss';el.innerHTML='Live NHC feed unavailable in this browser. <a href="https://www.nhc.noaa.gov/" target="_blank" rel="noopener">Open NHC</a>'}}
+async function loadAlerts(){const el=$('alerts');try{const r=await fetch('https://api.weather.gov/alerts/active?point=30.4224,-86.6170');const j=await r.json();const f=j.features||[];if(!f.length){el.className='miss';el.textContent='No active NWS alerts for this point.';return}
+el.className='';el.innerHTML=f.map(a=>`<div class="al"><b>${a.properties.event}</b><br>${a.properties.headline||''}</div>`).join('')}catch(e){el.className='miss';el.innerHTML='NWS alerts unavailable. <a href="https://www.weather.gov/mob/" target="_blank" rel="noopener">Open NWS</a>'}}
+let last=0;
+function refreshAll(){loadImgs();loadStatus();loadAlerts();last=Date.now()}
+function tick(){const left=Math.max(0,1800-Math.floor((Date.now()-last)/1000));$('upd').textContent='Updated '+new Date(last).toLocaleTimeString()+' | next in '+Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left===0)refreshAll()}
+buildGraphics();refreshAll();setInterval(tick,1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-last>1800000)refreshAll()});
+</script></body></html>
