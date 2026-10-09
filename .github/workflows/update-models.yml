@@ -1,0 +1,27 @@
+name: Update model tracks
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download NHC model tracks for Isaias (AL09)
+        run: |
+          curl -fsSL --retry 3 https://ftp.nhc.noaa.gov/atcf/aid_public/aal092026.dat.gz | gunzip > adeck.txt
+          wc -l adeck.txt
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add adeck.txt
+          git diff --cached --quiet || (git commit -m "Update model tracks" && git push)
